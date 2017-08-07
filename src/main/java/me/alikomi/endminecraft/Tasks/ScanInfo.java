@@ -18,7 +18,7 @@ public class ScanInfo {
     public static void scan(String ip, int port) {
         MinecraftProtocol mc = new MinecraftProtocol("KoMiTest");
         //final Proxy p = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("127.0.0.1", 1080));
-        final Client client = new Client(ip, port, mc,new TcpSessionFactory(new Proxy(Proxy.Type.HTTP,new InetSocketAddress("127.1",1080))));
+        final Client client = new Client(ip, port, mc,new TcpSessionFactory(new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("127.1",1080))));
         client.getSession().connect();
         client.getSession().addListener(new SessionListener() {
 
