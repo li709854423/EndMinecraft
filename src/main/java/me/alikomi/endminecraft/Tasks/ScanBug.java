@@ -23,8 +23,8 @@ public class ScanBug extends Util {
                 final OutputStream out = socket.getOutputStream();
                 out.write(head);
                 out.flush();
-                for (int iq = 0; iq < 30; iq++) {
-                    Thread.sleep(100);
+                for (int iq = 0; iq < 10; iq++) {
+                    Thread.sleep(250);
                     log("第 " + iq + "次发包,共10次");
                     for (int i = 0; i < 10; i++) {
                         out.write(new byte[]{0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00});

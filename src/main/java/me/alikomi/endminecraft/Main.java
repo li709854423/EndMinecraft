@@ -3,6 +3,7 @@ package me.alikomi.endminecraft;
 import me.alikomi.endminecraft.Data.BugData;
 import me.alikomi.endminecraft.Data.InfoData;
 import me.alikomi.endminecraft.Tasks.ScanBug;
+import me.alikomi.endminecraft.Tasks.ScanInfo;
 import me.alikomi.endminecraft.utils.Util;
 
 import java.util.Scanner;
@@ -24,11 +25,11 @@ public class Main extends Util {
         infoData = new InfoData(ip, port);
         log("是否开始进服前漏洞探测y/n");
         if ("y".equalsIgnoreCase(sc.next())) {
-            bugData = new BugData(ip, port);
-            ScanBug.scanMOTD(ip, port);
-            log("漏洞检测结果： " );
-            log(bugData.toString());
-
+            //bugData = new BugData(ip, port);
+            //ScanBug.scanMOTD(ip, port);
+            //log("漏洞检测结果： ");
+            //log(bugData.toString());
+            ScanInfo.scan(ip, port);
         }
     }
 
