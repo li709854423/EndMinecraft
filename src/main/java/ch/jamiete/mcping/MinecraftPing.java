@@ -1,31 +1,3 @@
-/*
- * Copyright 2014 jamietech. All rights reserved.
- * https://github.com/jamietech/MinecraftServerPing
- *
- * Redistribution and use in source and binary forms, with or without modification, are
- * permitted provided that the following conditions are met:
- *
- *    1. Redistributions of source code must retain the above copyright notice, this list of
- *       conditions and the following disclaimer.
- *
- *    2. Redistributions in binary form must reproduce the above copyright notice, this list
- *       of conditions and the following disclaimer in the documentation and/or other materials
- *       provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * The views and conclusions contained in the software and documentation are those of the
- * authors and contributors and should not be interpreted as representing official policies,
- * either expressed or implied, of anybody else.
- */
 package ch.jamiete.mcping;
 
 import java.io.ByteArrayOutputStream;
@@ -34,30 +6,14 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import com.google.gson.Gson;
 
 public class MinecraftPing {
 
-    /**
-     * Fetches a {@link MinecraftPingReply} for the supplied hostname.
-     * <b>Assumed timeout of 2s and port of 25565.</b>
-     * 
-     * @param hostname - a valid String hostname
-     * @return {@link MinecraftPingReply}
-     * @throws IOException 
-     */
-    public MinecraftPingReply getPing(final String hostname) throws IOException {
+    public String getPing(final String hostname) throws IOException {
         return this.getPing(new MinecraftPingOptions().setHostname(hostname));
     }
 
-    /**
-     * Fetches a {@link MinecraftPingReply} for the supplied options.
-     * 
-     * @param options - a filled instance of {@link MinecraftPingOptions}
-     * @return {@link MinecraftPingReply}
-     * @throws IOException 
-     */
-    public MinecraftPingReply getPing(final MinecraftPingOptions options) throws IOException {
+    public String getPing(final MinecraftPingOptions options) throws IOException {
         MinecraftPingUtil.validate(options.getHostname(), "Hostname cannot be null.");
         MinecraftPingUtil.validate(options.getPort(), "Port cannot be null.");
 
@@ -124,7 +80,7 @@ public class MinecraftPing {
         in.close();
         socket.close();
 
-        return new Gson().fromJson(json, MinecraftPingReply.class);
+        return json;
     }
 
 }

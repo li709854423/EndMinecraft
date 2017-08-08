@@ -1,4 +1,4 @@
-package me.alikomi.endminecraft.Data;
+package me.alikomi.endminecraft.data;
 
 public class InfoData {
 

@@ -1,4 +1,4 @@
-package me.alikomi.endminecraft.Data;
+package me.alikomi.endminecraft.data;
 
 public class BugData {
     private static String ip;
@@ -30,7 +30,7 @@ public class BugData {
 
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("ip: ").append(ip);
-        stringBuilder.append(System.getProperty("line.separator", "\n"));
+        stringBuilder.append(System.getProperty("line.separator" , "\n"));
         stringBuilder.append("port: ").append(port);
         stringBuilder.append(System.getProperty("line.separator", "\n"));
         stringBuilder.append("motdBug: ").append(motd);
