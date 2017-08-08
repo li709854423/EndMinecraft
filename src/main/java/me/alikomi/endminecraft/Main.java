@@ -25,11 +25,11 @@ public class Main extends Util {
         infoData = new InfoData(ip, port);
         log("是否开始进服前漏洞探测y/n");
         if ("y".equalsIgnoreCase(sc.next())) {
-            //bugData = new BugData(ip, port);
-            //ScanBug.scanMOTD(ip, port);
-            //log("漏洞检测结果： ");
-            //log(bugData.toString());
-            ScanInfo.scan(ip, port);
+            bugData = new BugData(ip, port);
+            ScanBug.scanMOTD(ip, port);
+            ScanBug.scanTAB(ip,port);
+            log("漏洞检测结果： ");
+            log(bugData.toString());
         }
     }
 
