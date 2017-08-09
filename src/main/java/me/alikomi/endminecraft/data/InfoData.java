@@ -7,6 +7,7 @@ public class InfoData {
     private static String serverVersion;
     private static int maxPlayer;
     private static int onlinePlayer;
+    private static String jsonData;
 
 
     public InfoData(String ip, int port) {
@@ -26,6 +27,26 @@ public class InfoData {
         return onlinePlayer;
     }
 
+    public String getJsonData() {
+        return jsonData;
+    }
+
+    public void setServerVersion(String info) {
+        serverVersion = info;
+    }
+
+    public void setMaxPlayer(int info) {
+        maxPlayer = info;
+    }
+
+    public void setOnlinePlayer(int info) {
+        onlinePlayer = info;
+    }
+
+    public void setJsonData(String info) {
+        jsonData = info;
+    }
+
     public String toString() {
 
         StringBuilder stringBuilder = new StringBuilder("");
@@ -39,7 +60,8 @@ public class InfoData {
         stringBuilder.append(System.getProperty("line.separator", "\n"));
         stringBuilder.append("onlinePlayer: ").append(onlinePlayer);
         stringBuilder.append(System.getProperty("line.separator", "\n"));
-
+        stringBuilder.append("jsonData: ").append(jsonData);
+        stringBuilder.append(System.getProperty("line.separator", "\n"));
 
         return stringBuilder.toString();
     }

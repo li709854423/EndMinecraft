@@ -1,7 +1,8 @@
-package me.alikomi.endminecraft.tasks;
+package me.alikomi.endminecraft.tasks.scan;
 
 import ch.jamiete.mcping.MinecraftPing;
 import ch.jamiete.mcping.MinecraftPingOptions;
+import me.alikomi.endminecraft.Main;
 import me.alikomi.endminecraft.utils.GetMotdData;
 import me.alikomi.endminecraft.utils.Util;
 
@@ -21,6 +22,9 @@ public class ScanInfo extends Util {
         log("版本： " + motdData.getVersion());
         log("在线人数： " + motdData.getOnlinePlayers());
         log("最大人数： " + motdData.getMaxPlayers());
+        Main.infoData.setServerVersion(motdData.getVersion());
+        Main.infoData.setOnlinePlayer(motdData.getOnlinePlayers());
+        Main.infoData.setMaxPlayer(motdData.getMaxPlayers());
     }
 
 }

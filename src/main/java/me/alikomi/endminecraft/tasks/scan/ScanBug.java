@@ -1,4 +1,4 @@
-package me.alikomi.endminecraft.tasks;
+package me.alikomi.endminecraft.tasks.scan;
 
 import me.alikomi.endminecraft.Main;
 import me.alikomi.endminecraft.utils.Util;
