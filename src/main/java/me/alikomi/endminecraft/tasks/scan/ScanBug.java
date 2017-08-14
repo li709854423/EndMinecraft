@@ -3,6 +3,7 @@ package me.alikomi.endminecraft.tasks.scan;
 import me.alikomi.endminecraft.Main;
 import me.alikomi.endminecraft.utils.Util;
 import org.spacehq.mc.protocol.MinecraftProtocol;
+import org.spacehq.mc.protocol.packet.ingame.client.ClientChatPacket;
 import org.spacehq.mc.protocol.packet.ingame.client.ClientTabCompletePacket;
 import org.spacehq.mc.protocol.packet.ingame.server.ServerChatPacket;
 import org.spacehq.mc.protocol.packet.ingame.server.ServerJoinGamePacket;
@@ -61,11 +62,9 @@ public class ScanBug extends Util {
     public static void scanTAB(String ip, int port) {
         MinecraftProtocol mc = new MinecraftProtocol("KoMiTest");
         //final Proxy p = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("127.0.0.1", 1080));
-        final Client client = new Client(ip, port, mc, new TcpSessionFactory(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("192.168.1", 1080))));
+        final Client client = new Client(ip, port, mc, new TcpSessionFactory(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("home.alikomi.me", 10086))));
         log("正在扫描TAB漏洞，请稍后");
         log("正在连接服务器");
-        client.getSession().connect();
-        log("服务器连接成功，正在扫描");
         client.getSession().addListener(new SessionListener() {
 
             public void packetReceived(PacketReceivedEvent packetReceivedEvent) {
@@ -75,7 +74,12 @@ public class ScanBug extends Util {
                 }
 
                 if (packetReceivedEvent.getPacket() instanceof ServerJoinGamePacket) {
+
+                    client.getSession().send(new ClientChatPacket("/register qwnmopzx123 qwnmopzx123"));
+                    client.getSession().send(new ClientChatPacket("/login qwnmopzx123"));
+
                     client.getSession().send(new ClientTabCompletePacket("/"));
+
                     log("TAB包发送成功！正在等待返回");
                     new Thread(() -> {
                         try {
@@ -88,8 +92,10 @@ public class ScanBug extends Util {
                         }else {
                             log("TAB漏洞不存在!");
                         }
-                        client.getSession().disconnect("TAB检测完毕，断开连接");
+                        //client.getSession().disconnect("TAB检测完毕，断开连接");
                     }).start();
+                    client.getSession().connect();
+                    log("服务器连接成功，正在扫描");
                 }
 
                 if (packetReceivedEvent.getPacket() instanceof ServerTabCompletePacket) {

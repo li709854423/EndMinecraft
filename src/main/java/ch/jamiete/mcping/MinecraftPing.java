@@ -60,7 +60,7 @@ public class MinecraftPing {
         String json = new String(data, options.getCharset());
 
         //> Ping
-
+/**
         out.writeByte(0x09); // Size of packet
         out.writeByte(MinecraftPingUtil.PACKET_PING);
         out.writeLong(System.currentTimeMillis());
@@ -71,7 +71,7 @@ public class MinecraftPing {
         id = MinecraftPingUtil.readVarInt(in);
         MinecraftPingUtil.io(id == -1, "Server prematurely ended stream.");
         MinecraftPingUtil.io(id != MinecraftPingUtil.PACKET_PING, "Server returned invalid packet.");
-
+**/
         // Close
 
         handshake.close();

