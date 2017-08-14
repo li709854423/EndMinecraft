@@ -94,7 +94,6 @@ public class ScanBug extends Util {
                         }
                         //client.getSession().disconnect("TAB检测完毕，断开连接");
                     }).start();
-                    client.getSession().connect();
                     log("服务器连接成功，正在扫描");
                 }
 
@@ -123,6 +122,7 @@ public class ScanBug extends Util {
                 System.out.println(disconnectedEvent.getReason());
             }
         });
+        client.getSession().connect();
         try {
             Thread.sleep(3700);
         } catch (InterruptedException e) {

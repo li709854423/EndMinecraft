@@ -11,7 +11,6 @@ import org.spacehq.packetlib.tcp.TcpSessionFactory;
 
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -97,7 +96,12 @@ public class DistributedBotAttack extends Util {
                     @Override
                     public void disconnected(DisconnectedEvent disconnectedEvent) {
                         log("断开连接：" +disconnectedEvent.getReason());
-                        //mc.getSession().connect();
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        mc.getSession().connect();
                     }
                 });
                 mc.getSession().connect();
