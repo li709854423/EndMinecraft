@@ -38,14 +38,14 @@ public class HttpReq {
                 result += line;
             }
         } catch (Exception e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
         //使用finally块来关闭输出流、输入流
-        finally{
-            if(out!=null){
+        finally {
+            if (out != null) {
                 out.close();
             }
-            if(in!=null){
+            if (in != null) {
                 try {
                     in.close();
                 } catch (IOException e) {

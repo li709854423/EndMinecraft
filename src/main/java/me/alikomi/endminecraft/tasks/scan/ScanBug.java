@@ -62,7 +62,9 @@ public class ScanBug extends Util {
     public static void scanTAB(String ip, int port) {
         MinecraftProtocol mc = new MinecraftProtocol("KoMiTest");
         //final Proxy p = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("127.0.0.1", 1080));
-        final Client client = new Client(ip, port, mc, new TcpSessionFactory(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("home.alikomi.me", 10086))));
+
+        //下面注意，填写你的信息
+        final Client client = new Client(ip, port, mc, new TcpSessionFactory(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("这里替换为代理地址", 这里替换为代理端口))));//前面那个参数是代理类型
         log("正在扫描TAB漏洞，请稍后");
         log("正在连接服务器");
         client.getSession().addListener(new SessionListener() {
@@ -89,7 +91,7 @@ public class ScanBug extends Util {
                         }
                         if (reTab) {
                             log("存在TAB漏洞！");
-                        }else {
+                        } else {
                             log("TAB漏洞不存在!");
                         }
                         //client.getSession().disconnect("TAB检测完毕，断开连接");

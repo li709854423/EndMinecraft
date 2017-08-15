@@ -28,7 +28,7 @@ public class MotdAttack extends Util {
     public boolean startAttack() {
         try {
             Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(ip,port),2000);
+            socket.connect(new InetSocketAddress(ip, port), 2000);
             socket.close();
             Thread.sleep(1000);//防止某些防火墙检测到
         } catch (IOException e) {
@@ -40,8 +40,8 @@ public class MotdAttack extends Util {
         }
         isAttacking = true;
         for (int t = 0; t < thread; t++) {
-            Thread tmpthread =  new Thread(() -> {
-                while(isAttacking) {
+            Thread tmpthread = new Thread(() -> {
+                while (isAttacking) {
                     try {
                         Thread.sleep(300);
                     } catch (InterruptedException e) {
@@ -88,7 +88,7 @@ public class MotdAttack extends Util {
             attackThreads.forEach(
                     (threads) -> {
                         if (threads.isAlive())
-                        threads.stop();
+                            threads.stop();
                     });
         });
         timerThread.start();
@@ -107,7 +107,7 @@ public class MotdAttack extends Util {
         attackThreads.forEach(
                 (thread1 -> {
                     if (thread1.isAlive())
-                    thread1.stop();
+                        thread1.stop();
                 })
         );
         timerThread.stop();

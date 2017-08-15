@@ -61,17 +61,17 @@ public class MinecraftPing {
 
         //> Ping
 /**
-        out.writeByte(0x09); // Size of packet
-        out.writeByte(MinecraftPingUtil.PACKET_PING);
-        out.writeLong(System.currentTimeMillis());
+ out.writeByte(0x09); // Size of packet
+ out.writeByte(MinecraftPingUtil.PACKET_PING);
+ out.writeLong(System.currentTimeMillis());
 
-        //< Ping
+ //< Ping
 
-        MinecraftPingUtil.readVarInt(in); // Size
-        id = MinecraftPingUtil.readVarInt(in);
-        MinecraftPingUtil.io(id == -1, "Server prematurely ended stream.");
-        MinecraftPingUtil.io(id != MinecraftPingUtil.PACKET_PING, "Server returned invalid packet.");
-**/
+ MinecraftPingUtil.readVarInt(in); // Size
+ id = MinecraftPingUtil.readVarInt(in);
+ MinecraftPingUtil.io(id == -1, "Server prematurely ended stream.");
+ MinecraftPingUtil.io(id != MinecraftPingUtil.PACKET_PING, "Server returned invalid packet.");
+ **/
         // Close
 
         handshake.close();

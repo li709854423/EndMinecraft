@@ -36,7 +36,7 @@ public class TabWithOneIp extends Util {
 
     public void startAttack() {
         MinecraftProtocol protocol = new MinecraftProtocol(username);
-        Client mc = new Client(ip,port,protocol,new TcpSessionFactory(new Proxy(type, new InetSocketAddress(pip,pport))));
+        Client mc = new Client(ip, port, protocol, new TcpSessionFactory(new Proxy(type, new InetSocketAddress(pip, pport))));
         mc.getSession().addListener(new SessionListener() {
             @Override
             public void packetReceived(PacketReceivedEvent packetReceivedEvent) {

@@ -14,6 +14,7 @@ public class BugData {
     public boolean getMotdBug() {
         return motd;
     }
+
     public void setMotdBug(boolean info) {
         motd = info;
     }
@@ -21,6 +22,7 @@ public class BugData {
     public boolean getTabBug() {
         return tab;
     }
+
     public void setTabBug(boolean info) {
         tab = info;
     }
@@ -30,7 +32,7 @@ public class BugData {
 
         StringBuilder stringBuilder = new StringBuilder("");
         stringBuilder.append("ip: ").append(ip);
-        stringBuilder.append(System.getProperty("line.separator" , "\n"));
+        stringBuilder.append(System.getProperty("line.separator", "\n"));
         stringBuilder.append("port: ").append(port);
         stringBuilder.append(System.getProperty("line.separator", "\n"));
         stringBuilder.append("motdBug: ").append(motd);
