@@ -30,7 +30,7 @@ public class MotdAttack extends Util {
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(ip, port), 2000);
             socket.close();
-            Thread.sleep(1000);//防止某些防火墙检测到
+            Thread.sleep(1000);
         } catch (IOException e) {
             e.printStackTrace();
             log("服务器连接失败！");

@@ -1,5 +1,8 @@
 package ch.jamiete.mcping;
 
+
+import java.net.Proxy;
+
 /**
  * Storage class for {@link MinecraftPing} options.
  */
@@ -7,8 +10,9 @@ public class MinecraftPingOptions {
 
     private String hostname;
     private int port = 25565;
-    private int timeout = 2000;
+    private int timeout = 4200;
     private String charset = "UTF-8";
+    private Proxy proxy = null;
 
     public MinecraftPingOptions setHostname(String hostname) {
         this.hostname = hostname;
@@ -30,6 +34,11 @@ public class MinecraftPingOptions {
         return this;
     }
 
+    public MinecraftPingOptions setProxy (Proxy proxy) {
+        this.proxy = proxy;
+        return this;
+    }
+
     public String getHostname() {
         return this.hostname;
     }
@@ -44,6 +53,10 @@ public class MinecraftPingOptions {
 
     public String getCharset() {
         return this.charset;
+    }
+
+    public Proxy getProxy() {
+        return this.proxy;
     }
 
 }

@@ -7,8 +7,8 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class HttpReq {
-    public static String sendPost(String url, String param) {
+class HttpReq {
+    static String sendPost(String url, String param) {
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";

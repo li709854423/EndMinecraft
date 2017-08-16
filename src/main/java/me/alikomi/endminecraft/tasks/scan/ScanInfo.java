@@ -7,16 +7,12 @@ import me.alikomi.endminecraft.utils.GetMotdData;
 import me.alikomi.endminecraft.utils.Util;
 
 
-import java.io.IOException;
-
 public class ScanInfo extends Util {
     public static void ScanMotdInfo(String ip, int port) {
         String data = null;
-        try {
-            data = new MinecraftPing().getPing(new MinecraftPingOptions().setHostname(ip).setPort(port));//获取MOTD的json。
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        data = new MinecraftPing().getPing(new MinecraftPingOptions().setHostname(ip).setPort(port));//获取MOTD的json。
+
         log(data);
         GetMotdData motdData = new GetMotdData(data);
         log("版本： " + motdData.getVersion());

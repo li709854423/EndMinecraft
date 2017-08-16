@@ -1,6 +1,7 @@
 package me.alikomi.endminecraft.tasks.scan;
 
 import me.alikomi.endminecraft.Main;
+import me.alikomi.endminecraft.tasks.attack.DistributedBotAttack;
 import me.alikomi.endminecraft.utils.Util;
 import org.spacehq.mc.protocol.MinecraftProtocol;
 import org.spacehq.mc.protocol.packet.ingame.client.ClientChatPacket;
@@ -60,11 +61,8 @@ public class ScanBug extends Util {
     }
 
     public static void scanTAB(String ip, int port) {
-        MinecraftProtocol mc = new MinecraftProtocol("KoMiTest");
-        //final Proxy p = new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("127.0.0.1", 1080));
-
-        //下面注意，填写你的信息
-        final Client client = new Client(ip, port, mc, new TcpSessionFactory(new Proxy(Proxy.Type.SOCKS, new InetSocketAddress("这里替换为代理地址", 这里替换为代理端口))));//前面那个参数是代理类型
+        MinecraftProtocol mc = new MinecraftProtocol(DistributedBotAttack.getRandomString(6));
+        final Client client = new Client(ip, port, mc, new TcpSessionFactory());
         log("正在扫描TAB漏洞，请稍后");
         log("正在连接服务器");
         client.getSession().addListener(new SessionListener() {
@@ -94,7 +92,7 @@ public class ScanBug extends Util {
                         } else {
                             log("TAB漏洞不存在!");
                         }
-                        //client.getSession().disconnect("TAB检测完毕，断开连接");
+                        client.getSession().disconnect("TAB检测完毕，断开连接");
                     }).start();
                     log("服务器连接成功，正在扫描");
                 }
