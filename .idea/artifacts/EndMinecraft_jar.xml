@@ -1,8 +1,12 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="EndMinecraft:jar">
+  <artifact name="EndMinecraft:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/EndMinecraft_jar</output-path>
-    <root id="archive" name="EndMinecraft.jar">
-      <element id="module-output" name="EndMinecraft" />
+    <root id="root">
+      <element id="archive" name="EndMinecraft.jar">
+        <element id="module-output" name="EndMinecraft" />
+      </element>
+      <element id="library" level="project" name="Protocol-1.8" />
+      <element id="library" level="project" name="fastjson-1.1.33" />
     </root>
   </artifact>
 </component>
