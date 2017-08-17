@@ -124,7 +124,7 @@ public class ScanBug extends Util {
         });
         client.getSession().connect();
         try {
-            Thread.sleep(3700);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

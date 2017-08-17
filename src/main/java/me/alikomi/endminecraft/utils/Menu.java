@@ -35,11 +35,11 @@ public class Menu extends Util {
         log("请选择是否开启TAB发包 y/n");
         boolean tabenable = false;
         if ("y".equalsIgnoreCase(sc.next())) tabenable = true;
-        log("请输入攻击时长！");
-        int time = sc.nextInt();
+        log("请输入攻击时长！(s)");
+        long time = sc.nextLong();
         log("请输入最大攻击数");
         int maxAttack = sc.nextInt();
-        log("请输入每次加入服务器间隔");
+        log("请输入每次加入服务器间隔(ms)");
         int sleepTime = sc.nextInt();
         log("请输入方式：");
         log("1.通过API获取");
@@ -61,7 +61,7 @@ public class Menu extends Util {
                 break;
             }
         }
-        DistributedBotAttack distributedBotAttack = new DistributedBotAttack(ip, port, time, sleepTime, ips, tabenable);
+        DistributedBotAttack distributedBotAttack = new DistributedBotAttack(ip, port, time*1000, sleepTime, ips, tabenable);
         distributedBotAttack.startAttack();
 
     }
@@ -71,23 +71,7 @@ public class Menu extends Util {
         int thread = sc.nextInt();
         log("请输入攻击用户名");
         String username = sc.next();
-        log("请输入代理地址");
-        String pip = sc.next();
-        int pport = 0;
-        if (!pip.contains(":")) {
-            log("请输入代理端口");
-            pport = sc.nextInt();
-        } else {
-            pport = Integer.parseInt(pip.split(":")[1]);
-            pip = pip.split(":")[0];
-        }
-        log("请输入代理方式: 1 - HTTP, 2- SOCKETS");
-        Proxy.Type type = Proxy.Type.SOCKS;
-        if (sc.nextInt() == 1) {
-            type = Proxy.Type.HTTP;
-        }
-
-        TabWithOneIp tabWithOneIp = new TabWithOneIp(ip, port, thread, username, type, pip, pport);
+        TabWithOneIp tabWithOneIp = new TabWithOneIp(ip, port, thread, username);
         tabWithOneIp.startAttack();
     }
 }

@@ -27,7 +27,7 @@ public class Main extends Util {
             ip = tmpip[0];
             port = Integer.parseInt(tmpip[1]);
         } else {
-            log("请输入端口（输入错误则为25565）");
+            log("请输入端口");
             port = sc.nextInt();
         }
         infoData = new InfoData(ip, port);
