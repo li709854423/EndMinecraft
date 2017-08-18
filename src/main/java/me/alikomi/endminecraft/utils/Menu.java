@@ -31,8 +31,7 @@ public class Menu extends Util {
     }
 
     public void _2() throws IOException, InterruptedException {
-        log("分布式假人压测选择");
-        log("请选择是否开启TAB发包 y/n");
+        log("分布式假人压测选择", "请选择是否开启TAB发包 y/n");
         boolean tabenable = false;
         if ("y".equalsIgnoreCase(sc.next())) tabenable = true;
         log("请输入攻击时长！(s)");
@@ -41,9 +40,7 @@ public class Menu extends Util {
         int maxAttack = sc.nextInt();
         log("请输入每次加入服务器间隔(ms)");
         int sleepTime = sc.nextInt();
-        log("请输入方式：");
-        log("1.通过API获取");
-        log("2.通过本地获取");
+        log("请输入方式：", "1.通过API获取", "2.通过本地获取");
         Map<String, Proxy.Type> ips;
 
         switch (sc.nextInt()) {
@@ -61,7 +58,7 @@ public class Menu extends Util {
                 break;
             }
         }
-        DistributedBotAttack distributedBotAttack = new DistributedBotAttack(ip, port, time*1000, sleepTime, ips, tabenable);
+        DistributedBotAttack distributedBotAttack = new DistributedBotAttack(ip, port, time * 1000, sleepTime, ips, tabenable);
         distributedBotAttack.startAttack();
 
     }

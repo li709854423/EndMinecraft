@@ -55,7 +55,7 @@ public class ScanBug extends Util {
             if (con) {
                 log("无MOTD漏洞");
             } else {
-                log("服务器连接失败");
+                log("服务器连接失败", "服务器连接失败", "服务器连接失败", "服务器连接失败", "服务器连接失败");
             }
         }
     }
@@ -63,14 +63,12 @@ public class ScanBug extends Util {
     public static void scanTAB(String ip, int port) {
         MinecraftProtocol mc = new MinecraftProtocol(DistributedBotAttack.getRandomString(6));
         final Client client = new Client(ip, port, mc, new TcpSessionFactory());
-        log("正在扫描TAB漏洞，请稍后");
-        log("正在连接服务器");
+        log("正在扫描TAB漏洞，请稍后", "正在连接服务器");
         client.getSession().addListener(new SessionListener() {
 
             public void packetReceived(PacketReceivedEvent packetReceivedEvent) {
                 if (packetReceivedEvent.getPacket() instanceof ServerChatPacket) {
-                    System.out.println(packetReceivedEvent.getPacket().toString());
-                    System.out.println(((ServerChatPacket) packetReceivedEvent.getPacket()).getMessage());
+                    log(((ServerChatPacket) packetReceivedEvent.getPacket()).getMessage());
                 }
 
                 if (packetReceivedEvent.getPacket() instanceof ServerJoinGamePacket) {
@@ -99,9 +97,7 @@ public class ScanBug extends Util {
 
                 if (packetReceivedEvent.getPacket() instanceof ServerTabCompletePacket) {
                     reTab = true;
-                    log("收到服务器返回TAB包");
-                    log("长度为：");
-                    log(((ServerTabCompletePacket) packetReceivedEvent.getPacket()).getMatches().length);
+                    log("收到服务器返回TAB包, 长度为：" + ((ServerTabCompletePacket) packetReceivedEvent.getPacket()).getMatches().length);
                     Main.bugData.setTabBug(true);
                 }
             }

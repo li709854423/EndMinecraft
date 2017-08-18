@@ -39,19 +39,12 @@ public class Main extends Util {
             bugData = new BugData(ip, port);
             ScanBug.scanMOTD(ip, port);
             ScanBug.scanTAB(ip, port);
-            log("漏洞检测结果： ");
-            log(bugData.toString());
+            log("漏洞检测结果： ", bugData.toString());
         }
         Menu menu = new Menu(sc, ip, port);
 
         while (true) {
-
-            log("请输入攻击方式：");
-            log("1 : MOTD攻击");
-            log("2 : 分布式假人压测");
-            log("3 : 单ipTAB压测");
-            log("========================");
-
+            log("请输入攻击方式：", "1 : MOTD攻击", "2 : 分布式假人压测", "3 : 单ipTAB压测", "========================");
             switch (sc.nextInt()) {
                 case 1: {
                     menu._1();
