@@ -1,4 +1,4 @@
-package me.alikomi.endminecraft.utils;
+package me.alikomi.endminecraft.tasks.others;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,8 +8,8 @@ import java.net.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
-class GetFileIp {
-    static Map<String, Proxy.Type> getFileIp(int maxAttack) throws IOException {
+public class GetFileIp {
+    public static Map<String, Proxy.Type> getFileIp(int maxAttack) throws IOException {
         int hs = 0;
         Map<String, Proxy.Type> ips = new HashMap<>();
         File file = new File("sockets.txt");

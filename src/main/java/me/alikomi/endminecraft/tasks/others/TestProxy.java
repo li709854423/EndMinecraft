@@ -1,10 +1,12 @@
-package me.alikomi.endminecraft.utils;
+package me.alikomi.endminecraft.tasks.others;
+
+import me.alikomi.endminecraft.utils.Util;
 
 import java.io.IOException;
 import java.net.*;
 
-class TestProxy extends Util {
-    static boolean test(String ip, int port, Proxy proxy) throws IOException {
+public class TestProxy extends Util {
+    public static boolean test(String ip, int port, Proxy proxy) throws IOException {
         Socket socket = new Socket(proxy);
         try {
             socket.connect(new InetSocketAddress(ip,port),3000);

@@ -3,7 +3,7 @@ package me.alikomi.endminecraft.tasks.scan;
 import ch.jamiete.mcping.MinecraftPing;
 import ch.jamiete.mcping.MinecraftPingOptions;
 import me.alikomi.endminecraft.Main;
-import me.alikomi.endminecraft.utils.GetMotdData;
+import me.alikomi.endminecraft.tasks.others.GetMotdData;
 import me.alikomi.endminecraft.utils.Util;
 
 

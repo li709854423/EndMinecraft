@@ -1,4 +1,4 @@
-package me.alikomi.endminecraft.utils;
+package me.alikomi.endminecraft.tasks.others;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
