@@ -18,7 +18,11 @@ public class MinecraftPingWithOutPing {
         } else {
             socket = new Socket(options.getProxy());
         }
-        socket.connect(new InetSocketAddress(options.getHostname(), options.getPort()), options.getTimeout());
+        try {
+            socket.connect(new InetSocketAddress(options.getHostname(), options.getPort()), options.getTimeout());
+        }catch (Exception e) {
+
+        }
 
         final DataInputStream in = new DataInputStream(socket.getInputStream());
         final DataOutputStream out = new DataOutputStream(socket.getOutputStream());

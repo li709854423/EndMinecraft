@@ -1,4 +1,4 @@
 Manifest-Version: 1.0
-Class-Path: libraries/Protocol.jar libraries/fastjson-1.1.33.jar
+Class-Path: fastjson-1.1.33.jar Protocol-1.8.jar snakeyaml-1.18.jar
 Main-Class: me.alikomi.endminecraft.Main
 

