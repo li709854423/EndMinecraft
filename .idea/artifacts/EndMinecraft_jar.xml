@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact name="EndMinecraft:jar">
+  <artifact build-on-make="true" name="EndMinecraft:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/EndMinecraft_jar</output-path>
     <root id="root">
       <element id="archive" name="EndMinecraft.jar">
@@ -8,7 +8,6 @@
       <element id="directory" name="libraries">
         <element id="library" level="project" name="fastjson-1.1.33" />
         <element id="library" level="project" name="snakeyaml-1.18" />
-        <element id="library" level="project" name="Protocol-1.8" />
       </element>
     </root>
   </artifact>

@@ -4,23 +4,31 @@ import me.alikomi.endminecraft.config.Configer;
 import me.alikomi.endminecraft.data.BugData;
 import me.alikomi.endminecraft.data.InfoData;
 import me.alikomi.endminecraft.tasks.scan.ScanBug;
+import me.alikomi.endminecraft.tasks.scan.ScanBug_112;
+import me.alikomi.endminecraft.tasks.scan.ScanBug_19;
 import me.alikomi.endminecraft.tasks.scan.ScanInfo;
 import me.alikomi.endminecraft.update.Updater;
 import me.alikomi.endminecraft.utils.Menu;
 import me.alikomi.endminecraft.utils.Util;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Main extends Util {
+
+    public static int playerName_PlayerSystem = 1000;
+    public static Lock lock = new ReentrantLock();
 
     public static Configer configer;
 
     private final static String version = "1.2.1";
     public static boolean leLe = false;
 
-    public static String minecraftVersion = "";
+    public static String minecraftVersion = "1.8";
     public static BugData bugData = null;
     public static InfoData infoData = null;
 
@@ -29,8 +37,8 @@ public class Main extends Util {
 
     private static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) throws InterruptedException, IOException {
-
+    public static void main(String[] args) throws InterruptedException, IOException, IllegalAccessException, InstantiationException {
+        configer = loadConfig("config.yml");
         setProgram(args);
         checkVersion();
         getInfo();
@@ -39,24 +47,21 @@ public class Main extends Util {
         showMenu();
     }
 
-    private static void setProgram(String[] args) throws InterruptedException {
-        if (args == null || args.length==0) {
+    private static void setProgram(String[] args) throws InterruptedException, FileNotFoundException {
+        if (args == null || args.length == 0) {
             return;
         }
         minecraftVersion = args[0];
-        if (args.length >= 2) {
-            configer = loadConfig(args[1]);
-        }
     }
 
-    private static Configer loadConfig(String filename) throws InterruptedException {
+    private static Configer loadConfig(String filename) throws InterruptedException, FileNotFoundException {
         File file = new File(filename);
-        if (! file.exists()) {
+        if (!file.exists()) {
             log("配置文件不存在，程序将于5秒后关闭");
             Thread.sleep(5000);
             System.exit(6);
         }
-        if (! file.canRead()) {
+        if (!file.canRead()) {
             log("配置文件不可读，程序将于5秒后关闭");
             Thread.sleep(5000);
             System.exit(7);
@@ -89,7 +94,15 @@ public class Main extends Util {
         if ("y".equalsIgnoreCase(sc.next())) {
             bugData = new BugData(ip, port);
             ScanBug.scanMOTD(ip, port);
-            ScanBug.scanTAB(ip, port);
+            if (minecraftVersion.contains("1.7") || minecraftVersion.contains("1.8")) {
+                ScanBug.scanTAB(ip, port);
+            }else if (minecraftVersion.contains("1.9") || minecraftVersion.contains("1.10")) {
+                ScanBug_19.scanTAB(ip, port);
+            }else if (minecraftVersion.contains("1.11") || minecraftVersion.contains("1.12")) {
+                ScanBug_112.scanTAB(ip, port);
+            }else {
+                log("版本错误！！！");
+            }
             log("漏洞检测结果： ", bugData.toString());
         }
     }

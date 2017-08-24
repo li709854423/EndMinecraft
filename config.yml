@@ -1,0 +1,16 @@
+#Please Use UTF-8 With out BOM Code!!!
+#请使用UTF-8 无BOM编码
+DBA: #假人压测配置文件
+  commands:
+    commandsInJoin: #进服时执行的命令或说话（只执行一次）
+      - "/register qwnmopzx123 qwnmopzx123"
+      - "/login qwnmopzx123"
+    commandsAttack: #循环执行命令或者说话，进服后循环一直执行
+      - "/baltop"
+      - "/pay * 0.01"
+      - "辣鸡服务器"
+    commandsSleep: 4500 #循环执行命令的间隔，单位毫秒(ms)，默认4500ms。即4.5秒
+  tabAttack: #如果服务器没有防御，秒蹦服务器
+    enable: true #是否开启tab攻击
+    sleep: 1 #每次发送tab封包间隔时间,请勿设置为0，不然会卡死本机
+    command: "/" #TAB补全包内容，如果你不懂这是什么，请勿改动此项

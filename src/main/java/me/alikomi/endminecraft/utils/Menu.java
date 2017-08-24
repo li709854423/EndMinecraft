@@ -1,10 +1,7 @@
 package me.alikomi.endminecraft.utils;
 
 import me.alikomi.endminecraft.Main;
-import me.alikomi.endminecraft.tasks.attack.DistributedBotAttack;
-import me.alikomi.endminecraft.tasks.attack.DistributedMotdAttack;
-import me.alikomi.endminecraft.tasks.attack.MotdAttack;
-import me.alikomi.endminecraft.tasks.attack.TabWithOneIp;
+import me.alikomi.endminecraft.tasks.attack.*;
 
 import java.io.IOException;
 import java.net.Proxy;
@@ -40,27 +37,20 @@ public class Menu extends Util {
     }
 
     public void _2() throws IOException, InterruptedException {
-        log("分布式假人压测选择", "请选择是否开启TAB发包 y/n");
-        if (Main.bugData != null) {
-
-            if (Main.bugData.getTabBug()) {
-                log("此服务器有tabbug，建议开启本功能");
-            } else {
-                log("此服务器没有tabbug，不建议开启本功能");
-            }
-        }
-        boolean tabenable = false;
-        if ("y".equalsIgnoreCase(sc.next())) tabenable = true;
-        log("请输入攻击时长！(s)");
+        log("分布式假人压测选择", "请输入攻击时长！(s)");
         long time = sc.nextLong();
         log("请输入最大攻击数");
         int maxAttack = sc.nextInt();
         log("请输入每次加入服务器间隔(ms)");
         int sleepTime = sc.nextInt();
         Map<String, Proxy.Type> ips = getProxy(maxAttack);
-        DistributedBotAttack distributedBotAttack = new DistributedBotAttack(ip, port, time * 1000, sleepTime, ips, tabenable);
-        distributedBotAttack.startAttack();
-
+        if (Main.minecraftVersion.contains("1.11") || Main.minecraftVersion.contains("1.12")) {
+            DistributedBotAttack_111_112 distributedBotAttack_111_112 = new DistributedBotAttack_111_112(ip, port, time * 1000, sleepTime, ips);
+            distributedBotAttack_111_112.startAttack();
+        }else {
+            DistributedBotAttack distributedBotAttack = new DistributedBotAttack(ip, port, time * 1000, sleepTime, ips);
+            distributedBotAttack.startAttack();
+        }
     }
 
     public void _3() {

