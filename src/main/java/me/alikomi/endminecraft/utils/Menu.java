@@ -44,13 +44,8 @@ public class Menu extends Util {
         log("请输入每次加入服务器间隔(ms)");
         int sleepTime = sc.nextInt();
         Map<String, Proxy.Type> ips = getProxy(maxAttack);
-        if (Main.minecraftVersion.contains("1.11") || Main.minecraftVersion.contains("1.12")) {
-            DistributedBotAttack_111_112 distributedBotAttack_111_112 = new DistributedBotAttack_111_112(ip, port, time * 1000, sleepTime, ips);
-            distributedBotAttack_111_112.startAttack();
-        }else {
-            DistributedBotAttack distributedBotAttack = new DistributedBotAttack(ip, port, time * 1000, sleepTime, ips);
-            distributedBotAttack.startAttack();
-        }
+        DistributedBotAttack distributedBotAttack = new DistributedBotAttack(ip, port, time * 1000, sleepTime, ips);
+        distributedBotAttack.startAttack();
     }
 
     public void _3() {

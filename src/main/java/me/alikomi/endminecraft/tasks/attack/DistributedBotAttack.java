@@ -1,18 +1,14 @@
 package me.alikomi.endminecraft.tasks.attack;
 
 import me.alikomi.endminecraft.Main;
-import me.alikomi.endminecraft.tasks.tabAttack.Tab17_8;
 import me.alikomi.endminecraft.utils.MinecraftPackets;
 import me.alikomi.endminecraft.utils.Util;
 import org.spacehq.mc.protocol.MinecraftProtocol;
 import org.spacehq.mc.protocol.packet.ingame.client.ClientChatPacket;
 import org.spacehq.mc.protocol.packet.ingame.client.ClientTabCompletePacket;
-import org.spacehq.mc.protocol.packet.ingame.client.player.*;
 import org.spacehq.mc.protocol.packet.ingame.server.ServerJoinGamePacket;
-import org.spacehq.mc.protocol.packet.ingame.server.ServerSwitchCameraPacket;
 import org.spacehq.packetlib.Client;
 import org.spacehq.packetlib.event.session.*;
-import org.spacehq.packetlib.packet.Packet;
 import org.spacehq.packetlib.tcp.TcpSessionFactory;
 
 import java.io.OutputStream;
@@ -141,25 +137,13 @@ public class DistributedBotAttack extends Util {
                     }).start();
 
                     if (tab) {
-                        if (Main.minecraftVersion.contains("1.7") || Main.minecraftVersion.contains("1.8")) {
-                            log("1.7 - 1.8 版本TAB开启");
-                            new Thread(new Tab17_8(client,ip,tabSleep)).start();
-                        } else if (Main.minecraftVersion.contains("1.9") || Main.minecraftVersion.contains("1.10")) {
-                            log("1.9 - 1.10 版本TAB开启");
-                            new Thread(() -> {
-                                while (isAttack) {
-                                    client.getSession().send(new ClientTabCompletePacket(tabComplete,false));
-                                    try {
-                                        Thread.sleep(tabSleep);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }).start();
-                        } else if (Main.minecraftVersion.contains("1.11")) {
-                            log("1.11版本TAB开启");
-                        }else {
-                            log("启动器错误！！请尝试重新开启");
+                        while (isAttack) {
+                            client.getSession().send(new ClientTabCompletePacket(tabComplete));
+                            try {
+                                Thread.sleep(tabSleep);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }

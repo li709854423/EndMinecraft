@@ -4,8 +4,6 @@ import me.alikomi.endminecraft.config.Configer;
 import me.alikomi.endminecraft.data.BugData;
 import me.alikomi.endminecraft.data.InfoData;
 import me.alikomi.endminecraft.tasks.scan.ScanBug;
-import me.alikomi.endminecraft.tasks.scan.ScanBug_112;
-import me.alikomi.endminecraft.tasks.scan.ScanBug_19;
 import me.alikomi.endminecraft.tasks.scan.ScanInfo;
 import me.alikomi.endminecraft.update.Updater;
 import me.alikomi.endminecraft.utils.Menu;
@@ -94,15 +92,7 @@ public class Main extends Util {
         if ("y".equalsIgnoreCase(sc.next())) {
             bugData = new BugData(ip, port);
             ScanBug.scanMOTD(ip, port);
-            if (minecraftVersion.contains("1.7") || minecraftVersion.contains("1.8")) {
-                ScanBug.scanTAB(ip, port);
-            }else if (minecraftVersion.contains("1.9") || minecraftVersion.contains("1.10")) {
-                ScanBug_19.scanTAB(ip, port);
-            }else if (minecraftVersion.contains("1.11") || minecraftVersion.contains("1.12")) {
-                ScanBug_112.scanTAB(ip, port);
-            }else {
-                log("版本错误！！！");
-            }
+            ScanBug.scanTAB(ip, port);
             log("漏洞检测结果： ", bugData.toString());
         }
     }
